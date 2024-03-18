@@ -3,10 +3,6 @@ import "./globals.css";
 import Header from "@/components/partials/Header";
 import Footer from "@/components/partials/Foooter";
 
-export const metadata = {
-  title: "Tutor"
-};
-
 export default function RootLayout({ children }) {
   return (
     
