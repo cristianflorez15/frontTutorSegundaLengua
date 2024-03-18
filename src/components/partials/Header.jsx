@@ -7,9 +7,11 @@ import {
   IconButton,
   Card,
 } from "@material-tailwind/react";
+import { useRouter } from 'next/navigation';
  
 export default function Header(params) {
   const [openNav, setOpenNav] = useState(false);
+  const router = useRouter();
  
   useEffect(() => {
     window.addEventListener(
@@ -25,6 +27,7 @@ export default function Header(params) {
             as="a"
             href="#"
             className="mr-4 cursor-pointer py-1.5 font-medium"
+            onClick={()=>router.push("/")}
             >
             Tutor
             </Typography>
@@ -35,6 +38,7 @@ export default function Header(params) {
                 color="blue-gray"
                 size="sm"
                 className="hidden lg:inline-block"
+                onClick={()=>router.push("/registrarme")}
                 >
                 <span>Regitrarse</span>
                 </Button>
@@ -43,6 +47,7 @@ export default function Header(params) {
                 color="red"
                 size="sm"
                 className="hidden lg:inline-block"
+                onClick={()=>router.push("/login")}
                 >
                 <span>Ingresar</span>
                 </Button>
@@ -88,10 +93,10 @@ export default function Header(params) {
         </div>
         <Collapse  open={openNav}>
             <div className="flex items-center gap-x-1">
-            <Button fullWidth variant="gradient" color="blue-gray" size="sm" className="">
-                <span>Registrarse</span>
+            <Button fullWidth variant="gradient" color="blue-gray" size="sm"  onClick={()=>router.push("/registrarme")}>
+                <span>Registrarme</span>
             </Button>
-            <Button fullWidth variant="gradient" color="red" size="sm" className="">
+            <Button fullWidth variant="gradient" color="red" size="sm"  onClick={()=>router.push("/login")}>
                 <span>Ingresar</span>
             </Button>
             </div>

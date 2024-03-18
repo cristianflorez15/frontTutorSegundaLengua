@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation';
 
 import {
     Card,
@@ -9,6 +10,8 @@ import {
   } from "@material-tailwind/react";
    
   export default function Login() {
+    const router = useRouter();
+
     return (
         <div className="items-center flex bg-white py-8">
             <Card color="transparent" className="mx-auto w-50" shadow={false}>
@@ -42,7 +45,7 @@ import {
                     />
                 </div>
                 
-                <Button color="red" className="mt-16" fullWidth>
+                <Button color="red" className="mt-16" fullWidth onClick={()=>router.push("/miCuenta/miHistorial")} >
                     Ingresar
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">

@@ -102,7 +102,7 @@ import {
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">
                     Ya tienes una cuenta?{" "}
-                    <a href="#" className="font-medium text-red-900">
+                    <a href="/login" className="font-medium text-red-900">
                     Ingresar
                     </a>
                 </Typography>

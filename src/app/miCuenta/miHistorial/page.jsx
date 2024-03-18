@@ -1,11 +1,14 @@
 'use client'
 import { Button } from "@material-tailwind/react";
+import { useRouter } from 'next/navigation';
 
-export default function MyHistorial(params) {
+export default function MiHistorial(params) {
+    const router = useRouter();
+
     return(
         <div>
             <div className="text-center">
-                <Button color="red" className="my-auto mx-4">
+                <Button color="red" className="my-auto mx-4" onClick={()=>router.push("/chat")} >
                     Nuevo chat
                 </Button>
             </div>
