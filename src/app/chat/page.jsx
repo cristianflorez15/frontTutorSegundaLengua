@@ -14,7 +14,7 @@ export default function Chat(params) {
     return(
         <div className="md:flex">
             <div className="bg-white w-full md:w-2/3 p-8 ">
-                <div className="border-solid border-2 border-blue-gray-100 rounded-lg w-full min-h-[50vh]">
+                <div className="border-solid border-2 border-blue-gray-100 rounded-lg w-full h-[50vh] overflow-y-auto">
                     <div className="bg-blue-gray-500 flex h-fit w-4/6 mr-2 ml-auto my-2 p-2 border-solid border-2 rounded-lg">
                         <p className="text-white">
                             Mensaje Usuario
@@ -23,6 +23,16 @@ export default function Chat(params) {
                     <div className="bg-red-500 flex h-fit w-4/6 ml-2 mr-auto my-2 p-2 border-solid border-2 rounded-lg">
                         <p className="text-white">
                             Mensaje del TutorMensaje del TutorMensaje del TutorMensaje del Tutor
+                        </p>
+                    </div>
+                    <div className="bg-blue-gray-500 flex h-fit w-4/6 mr-2 ml-auto my-2 p-2 border-solid border-2 rounded-lg">
+                        <p className="text-white">
+                            Mensaje Usuario Mensaje UsuarioMensaje UsuarioMensaje Usuario
+                        </p>
+                    </div>
+                    <div className="bg-red-500 flex h-fit w-4/6 ml-2 mr-auto my-2 p-2 border-solid border-2 rounded-lg">
+                        <p className="text-white">
+                            Mensaje del Tutor
                         </p>
                     </div>
                     <div className="bg-blue-gray-500 flex h-fit w-4/6 mr-2 ml-auto my-2 p-2 border-solid border-2 rounded-lg">

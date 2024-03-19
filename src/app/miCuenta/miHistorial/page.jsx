@@ -6,7 +6,7 @@ export default function MiHistorial(params) {
     const router = useRouter();
 
     return(
-        <div>
+        <div className="mt-8">
             <div className="text-center">
                 <Button color="red" className="my-auto mx-4" onClick={()=>router.push("/chat")} >
                     Nuevo chat
