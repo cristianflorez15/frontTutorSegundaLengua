@@ -1,14 +1,17 @@
 'use client'
-
-import {
-    Card,
-    Input,
-    Checkbox,
-    Button,
-    Typography,
-  } from "@material-tailwind/react";
+import { useRouter } from 'next/navigation';
+import { useForm } from "react-hook-form";
+import { Card, Input, Button, Typography, } from "@material-tailwind/react";
    
-  export default function EditarPerfil() {
+export default function EditarPerfil() {
+    const router = useRouter();
+    const { register, handleSubmit,  formState: { errors } } = useForm()
+
+    const onSubmit = (data) => {
+        console.log(data)
+        router.push("/miCuenta/miHistorial")
+    }
+    
     return (
         <div className="items-center flex py-8 bg-white">
             <Card color="transparent" className="mx-auto w-50" shadow={false}>
@@ -72,4 +75,4 @@ import {
             </Card>
         </div>
     );
-  }
+}

@@ -40,7 +40,7 @@ export default function MiHistorial(params) {
                             Mensaje del Tutor
                         </p>
                     </div>
-                    <a href="#" className="inline-block"><button
+                    <a href="/chat" className="inline-block"><button
                         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-900/10 active:bg-gray-900/20"
                         type="button">
                         Continuar conversación<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -76,7 +76,7 @@ export default function MiHistorial(params) {
                             Mensaje del Tutor
                         </p>
                     </div>
-                    <a href="#" className="inline-block"><button
+                    <a href="/chat" className="inline-block"><button
                         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-900/10 active:bg-gray-900/20"
                         type="button">
                         Continuar conversación<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -112,7 +112,7 @@ export default function MiHistorial(params) {
                             Mensaje del Tutor
                         </p>
                     </div>
-                    <a href="#" className="inline-block"><button
+                    <a href="/chat" className="inline-block"><button
                         className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none hover:bg-gray-900/10 active:bg-gray-900/20"
                         type="button">
                         Continuar conversación<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
