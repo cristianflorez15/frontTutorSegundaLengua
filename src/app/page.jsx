@@ -1,5 +1,6 @@
 'use client'
+import { Button } from 'react-bootstrap';
 
 export default function Home() {
-  return( 'presentacion')
+  return( <Button variant="primary">Boton</Button> )
 }
