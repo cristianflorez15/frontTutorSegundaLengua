@@ -2,5 +2,9 @@
 import { Button } from 'react-bootstrap';
 
 export default function Home() {
-  return( <Button variant="primary">Boton</Button> )
+  return( 
+    <div>
+      
+    </div>
+   )
 }
