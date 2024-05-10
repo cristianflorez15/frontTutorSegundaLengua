@@ -30,7 +30,7 @@ export default function Chat(params) {
             })
         }
         scrollToBottom()
-    }, [])
+    }, [chatActual])
 
     let enviarMensaje = async(data) => {
         let mensaje = data.mensaje;
