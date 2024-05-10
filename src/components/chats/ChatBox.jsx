@@ -9,7 +9,7 @@ export default function ChatBox(params) {
     },[])
     
     return(
-        <div className="bg-white border border-1 border-secondary px-3 py-2">
+        <div className="bg-white border border-secondary-subtle px-3 py-2">
             <p className="p-0 m-0 text-end">{chat?.createdAt.slice(0,10)}</p>
             <p className="p-0 m-0"><strong>Tú: </strong>{chat?.mensajes[chat?.mensajes.length - 2]?.parts[0].text}</p>
             <p className="p-0 m-0 text-nowrap overflow-hidden"><strong>Tutor: </strong>{chat?.mensajes[chat?.mensajes.length - 1]?.parts[0].text}</p>

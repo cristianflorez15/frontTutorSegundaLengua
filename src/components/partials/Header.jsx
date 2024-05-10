@@ -1,22 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Button, Container, Form, Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap';
 import { FaUserCircle } from "react-icons/fa";
 import { MdChat } from "react-icons/md";
 import { SiSololearn } from "react-icons/si";
+import { Chats_data } from "@/context/context";
+import ChatBox from "@/components/chats/ChatBox";
 
 export default function Header() {
     const [showChats, setShowChats] = useState(false);
     const [showPerfil, setShowPerfil] = useState(false);
+    const [chatButton, setChatButton] = useState(<></>);
     const [user, setUser] = useState(false);
     const [showChatsButton, setShowChatsButton] = useState(false);
     const handleCloseChats = () => setShowChats(false);
     const handleClosePerfil = () => setShowPerfil(false);
     const handleShowChats = () => setShowChats(true);
     const handleShowPerfil = () => setShowPerfil(true);
+    const { chats } = useContext(Chats_data);
+    const {setChatActual} = useContext(Chats_data);
+
 
     useEffect(()=>{
         localStorage.getItem('token') ? setUser(true) : setUser(false);
-        window.location.pathname == '/' ? setShowChatsButton(true) : setShowChatsButton(false)
+        window.location.pathname == '/' ? setShowChatsButton(true) : setShowChatsButton(false);
+        window.location.pathname == '/' ? 
+        setChatButton(<Button variant="link" className='d-block text-decoration-none text-white' onClick={()=>{window.location.assign('/chat')}}>Chat</Button>):
+        setChatButton(<Button variant="link" className={showChatsButton && user?'d-block text-decoration-none text-white':'d-block d-md-none text-decoration-none text-white'} onClick={handleShowChats}>Mis chats</Button>);
     },[window.location])
 
     const cerrarSesion = () => {
@@ -30,9 +39,7 @@ export default function Header() {
             <Container fluid>
                 <Navbar.Brand href="/" className='mx-0'><SiSololearn className='mx-2'/>Tuto</Navbar.Brand>
                 <div className='d-flex flex-nowrap'>
-                    {user && <Button variant="link" className={showChatsButton && user?'d-block text-decoration-none text-white':'d-block d-md-none text-decoration-none text-white'} onClick={handleShowChats}>
-                        Mis chats
-                    </Button>}
+                    {user && chatButton}
                     <div className='d-flex flex-nowrap'>
                         {!user && <Button variant="link" className='text-decoration-none text-white d-flex py-0' href="/login">
                             <p className='my-auto mx-2'>Iniciar sesión</p>
@@ -59,19 +66,15 @@ export default function Header() {
                         <div className="w-100">
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
-                        {/* <FaSearch className="fs-3 mx-3 my-auto" role="button"/> */}
                     </div>
-                    <div className="bg-white border">
-                        chats
-                    </div>
-                    <div className="bg-white border">
-                        chats
-                    </div>
-                    <div className="bg-white border">
-                        chats
-                    </div>
-                    <div className="bg-white border">
-                        chats
+                    <div className="overflow-auto text-start"  style={window.innerHeight>600?{maxHeight: '63vh'}:{maxHeight: '55vh'}}>
+                        {chats && chats?.map((chat,i)=>{
+                            return( 
+                                <div key={i} onClick={()=>{setChatActual(chat)}}>
+                                    <ChatBox chat={chat}/>
+                                </div>
+                            )
+                        })}
                     </div>
                     </Offcanvas.Body>
                 </Offcanvas>

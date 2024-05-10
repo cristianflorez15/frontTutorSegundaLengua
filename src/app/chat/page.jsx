@@ -1,16 +1,17 @@
 'use client'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { BsFillSendFill } from "react-icons/bs";
 import { MdChat } from "react-icons/md";
 import { useForm } from 'react-hook-form';
 import ApiController from '@/controllers/api.controller';
 import ChatBox from "@/components/chats/ChatBox";
+import { Chats_data } from "@/context/context";
 
 export default function Chat(params) {
 
-    const [chatActual, setChatActual] = useState(null);
-    const [ chats, setChats ] = useState([]);
+    const {chatActual, setChatActual} = useContext(Chats_data);
+    const { chats, setChats } = useContext(Chats_data);
     const { register, handleSubmit, formState: { errors}, reset} = useForm();
     const apiController = new ApiController();
     const messagesEndRef = useRef(null)
@@ -42,14 +43,11 @@ export default function Chat(params) {
             await apiController.post({mensajes: [{parts:[{text: mensaje}], role: 'user'}]}, '/chat').then(rta => {
                 setChatActual(rta.data);
                 setChats(prev=>[rta.data, ...prev])
-                console.log('entra')
-                console.log(rta)
             })
         }else{
             setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: mensaje}], role: 'user'}]}})
             await apiController.patch({mensajes: [...chatActual.mensajes, {parts:[{text: mensaje}], role: 'user'}], _id:chatActual._id}, '/chat').then(rta => {
                 setChatActual(rta.data);
-                setChats(prev=>[rta.data, ...prev])
             })
         }
     }
@@ -81,7 +79,7 @@ export default function Chat(params) {
                         </div>
                     </div>
                     <div className="overflow-auto text-start"  style={window.innerHeight>600?{maxHeight: '63vh'}:{maxHeight: '55vh'}}>
-                        {chats?.map((chat,i)=>{
+                        {chats && chats?.map((chat,i)=>{
                             return( 
                                 <div key={i} onClick={()=>{elegirChat(chat)}}>
                                     <ChatBox chat={chat}/>
