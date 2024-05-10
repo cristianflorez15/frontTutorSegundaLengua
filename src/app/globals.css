@@ -10,6 +10,24 @@
     .h-header {
         height: 10vh !important;
     }
+
+    .h-history {
+        max-height: 61vh !important;
+    }
+
+    .h-chats {
+        max-height: 58vh !important;
+    }
+}
+
+@media (min-height: 600px){
+    .h-history {
+        max-height: 66vh !important;
+    }
+
+    .h-chats {
+        max-height: 63vh !important;
+    }
 }
 
 @media (min-height: 1500px){

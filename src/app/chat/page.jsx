@@ -78,7 +78,7 @@ export default function Chat(params) {
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
                     </div>
-                    <div className="overflow-auto text-start"  style={window.innerHeight>600?{maxHeight: '63vh'}:{maxHeight: '55vh'}}>
+                    <div className="overflow-auto text-start h-chats">
                         {chats && chats?.map((chat,i)=>{
                             return( 
                                 <div key={i} onClick={()=>{elegirChat(chat)}}>
@@ -93,7 +93,7 @@ export default function Chat(params) {
                         <h5 className="p-3 m-0">Título</h5>
                     </div>
                     <div>
-                        <div className="d-flex flex-column overflow-auto" id="chat-box" style={window.innerHeight>600?{maxHeight: '68vh'}:{maxHeight: '60vh'}}>
+                        <div className="d-flex flex-column overflow-auto h-history" id="chat-box">
                             {chatActual?.mensajes?.map((mensaje,i)=>{
                                 return(
                                     <div key={i} className={mensaje.role=='user'?"bg-secondary m-3 py-2 px-3 ms-auto rounded-3 message-box":"bg-primary m-3 py-2 px-3 me-auto rounded-3 message-box"}>

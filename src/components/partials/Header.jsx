@@ -26,7 +26,7 @@ export default function Header() {
         window.location.pathname == '/' ? 
         setChatButton(<Button variant="link" className='d-block text-decoration-none text-white' onClick={()=>{window.location.assign('/chat')}}>Chat</Button>):
         setChatButton(<Button variant="link" className={showChatsButton && user?'d-block text-decoration-none text-white':'d-block d-md-none text-decoration-none text-white'} onClick={handleShowChats}>Mis chats</Button>);
-    },[window.location])
+    },[])
 
     const cerrarSesion = () => {
         localStorage.clear();
@@ -67,7 +67,7 @@ export default function Header() {
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
                     </div>
-                    <div className="overflow-auto text-start"  style={window.innerHeight>600?{maxHeight: '63vh'}:{maxHeight: '55vh'}}>
+                    <div className="overflow-auto text-start h-chats">
                         {chats && chats?.map((chat,i)=>{
                             return( 
                                 <div key={i} onClick={()=>{setChatActual(chat)}}>
