@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState, useRef } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import { BsFillSendFill } from "react-icons/bs";
 import { MdChat } from "react-icons/md";
 import { useForm } from 'react-hook-form';
 import ApiController from '@/controllers/api.controller';
+import ChatBox from "@/components/chats/ChatBox";
 
 export default function Chat(params) {
 
@@ -19,13 +20,17 @@ export default function Chat(params) {
     }
 
     useEffect(()=>{
+
+        if(!localStorage.getItem('token')){
+            window.location.assign('/login');
+        }
         if(chats.length<=0){
             apiController.get('/chat/').then(rta => {
-                setChats(rta.data)
+                setChats(rta.data.reverse())
             })
         }
         scrollToBottom()
-    }, [chatActual])
+    }, [])
 
     let enviarMensaje = async(data) => {
         let mensaje = data.mensaje;
@@ -36,11 +41,15 @@ export default function Chat(params) {
             setChatActual({mensajes: [{parts:[{text: mensaje}], role: 'user'}]})
             await apiController.post({mensajes: [{parts:[{text: mensaje}], role: 'user'}]}, '/chat').then(rta => {
                 setChatActual(rta.data);
+                setChats(prev=>[rta.data, ...prev])
+                console.log('entra')
+                console.log(rta)
             })
         }else{
             setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: mensaje}], role: 'user'}]}})
             await apiController.patch({mensajes: [...chatActual.mensajes, {parts:[{text: mensaje}], role: 'user'}], _id:chatActual._id}, '/chat').then(rta => {
                 setChatActual(rta.data);
+                setChats(prev=>[rta.data, ...prev])
             })
         }
     }
@@ -59,35 +68,34 @@ export default function Chat(params) {
 
     return(
         <div className="m-0 p-0 w-100">
-            <Row xs={1} md={2} lg={3} className="w-100 g-0">
-                <Col lg={3} className="bg-secondary d-none d-lg-block">
+            <Row xs={1} md={2} lg={2} className="w-100 g-0">
+                <Col md={4} lg={4} className="bg-secondary bg-opacity-10 d-none d-md-block h-chat text-center">
                     <div className="d-flex justify-content-between text-white">
                         <h5 className="p-3 pb-2 m-0 mx-2">Mis chats</h5>
                         <MdChat className='fs-2 mt-auto mb-1 mx-3'/>
                     </div>
+                    <Button className='mb-3 mx-auto' onClick={()=>{setChatActual(null)}}>Nuevo chat</Button>
                     <div className="mx-2 mb-3 bg-white border rounded-5 overflow-hidden d-flex">
                         <div className="w-100">
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
                     </div>
-                    <div className="overflow-auto h-history-box">
+                    <div className="overflow-auto text-start"  style={window.innerHeight>600?{maxHeight: '63vh'}:{maxHeight: '55vh'}}>
                         {chats?.map((chat,i)=>{
-                            return(
-                                <div key={i} className="bg-white border" role="button" onClick={()=>{elegirChat(chat)}}>
-                                    <p>{new Date(chat.updatedAt).toLocaleString()}</p>
-                                    <p>Inglés</p>
-                                    <p>{chat.mensajes[chat.mensajes?.length-1]?.role?.replace(/\b\w/g, l => l.toUpperCase())}: {chat.mensajes[chat.mensajes?.length-1]?.parts[0]?.text}</p>
+                            return( 
+                                <div key={i} onClick={()=>{elegirChat(chat)}}>
+                                    <ChatBox chat={chat}/>
                                 </div>
                             )
                         })}
                     </div>
                 </Col>
-                <Col xs={12} md={8} lg={6} className="bg-white justify-content-between d-flex flex-column h-chat">
+                <Col xs={12} md={8} lg={8} className="bg-white justify-content-between d-flex flex-column h-chat">
                     <div className="border-bottom">
                         <h5 className="p-3 m-0">Título</h5>
                     </div>
                     <div>
-                        <div className="d-flex flex-column overflow-auto h-chat-box" id="chat-box">
+                        <div className="d-flex flex-column overflow-auto" id="chat-box" style={window.innerHeight>600?{maxHeight: '68vh'}:{maxHeight: '60vh'}}>
                             {chatActual?.mensajes?.map((mensaje,i)=>{
                                 return(
                                     <div key={i} className={mensaje.role=='user'?"bg-secondary m-3 py-2 px-3 ms-auto rounded-3 message-box":"bg-primary m-3 py-2 px-3 me-auto rounded-3 message-box"}>
@@ -108,20 +116,14 @@ export default function Chat(params) {
                         </div>
                     </div>
                 </Col>
-                <Col xs={12} md={4} lg={3} className="bg-secondary">
-                    {/* <div className="text-white text-center">
-                        <h5 className="p-3 m-0">Progreso</h5>
-                        <div className="bg-white mx-2 rounded-3 text-dark">
-                            Correcciones: 00
-                        </div>
-                    </div> */}
+                {/* <Col xs={12} md={4} lg={3} className="bg-secondary">
                     <div className="text-white text-center">
                         <h5 className="p-3 m-0">Diccionario</h5>
                         <div className="bg-white mx-2 rounded-3 text-dark">
                             Palabra: Significado
                         </div>
                     </div>
-                </Col>
+                </Col> */}
             </Row>
         </div>
     )

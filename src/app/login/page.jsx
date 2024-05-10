@@ -13,7 +13,7 @@ export default function Login(params) {
         await apiController.post(data, '/usuario/login').then(rta => {
             localStorage.setItem('token', rta.token)
             if(rta.status == 200){
-                window.location.assign('/chat')
+                window.location.assign('/chat');
             }else if(rta.status == 400){
                 Swal.fire({
                     title: rta.message,

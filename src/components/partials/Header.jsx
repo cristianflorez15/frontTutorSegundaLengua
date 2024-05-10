@@ -1,31 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Container, Form, Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap';
 import { FaUserCircle } from "react-icons/fa";
 import { MdChat } from "react-icons/md";
+import { SiSololearn } from "react-icons/si";
 
 export default function Header() {
     const [showChats, setShowChats] = useState(false);
     const [showPerfil, setShowPerfil] = useState(false);
+    const [user, setUser] = useState(false);
+    const [showChatsButton, setShowChatsButton] = useState(false);
     const handleCloseChats = () => setShowChats(false);
     const handleClosePerfil = () => setShowPerfil(false);
     const handleShowChats = () => setShowChats(true);
     const handleShowPerfil = () => setShowPerfil(true);
 
+    useEffect(()=>{
+        localStorage.getItem('token') ? setUser(true) : setUser(false);
+        window.location.pathname == '/' ? setShowChatsButton(true) : setShowChatsButton(false)
+    },[window.location])
+
+    const cerrarSesion = () => {
+        localStorage.clear();
+        window.location.assign('/')
+    }
+
     return (
-        <div>
-            <Navbar bg="dark" data-bs-theme="dark" expand='md' className="mb-0 d-block border-bottom">
+        <div className='h-header bg-dark'>
+            <Navbar bg="dark" data-bs-theme="dark" expand='md' className="mb-0 d-flex d-block border-bottom h-header ">
             <Container fluid>
-                <Navbar.Brand href="#">TUTOR</Navbar.Brand>
+                <Navbar.Brand href="/" className='mx-0'><SiSololearn className='mx-2'/>Tuto</Navbar.Brand>
                 <div className='d-flex flex-nowrap'>
-                    <Button variant="link" className='d-block d-lg-none text-decoration-none text-white' onClick={handleShowChats}>
+                    {user && <Button variant="link" className={showChatsButton && user?'d-block text-decoration-none text-white':'d-block d-md-none text-decoration-none text-white'} onClick={handleShowChats}>
                         Mis chats
-                    </Button>
+                    </Button>}
                     <div className='d-flex flex-nowrap'>
-                        <Button variant="link" className='text-decoration-none text-white d-flex py-0' onClick={handleShowPerfil}>
+                        {!user && <Button variant="link" className='text-decoration-none text-white d-flex py-0' href="/login">
+                            <p className='my-auto mx-2'>Iniciar sesión</p>
+                        </Button>}
+                        {!user && <Button variant="link" className='text-decoration-none text-white d-flex py-0' href="/registrarme">
+                            <p className='my-auto mx-2'>Registrarme</p>
+                        </Button>}
+                        {user && <Button variant="link" className='text-decoration-none text-white d-flex py-0' onClick={handleShowPerfil}>
                             <p className='my-auto mx-2'>Mi cuenta</p>
                             <FaUserCircle className='fs-1 my-auto'/>
-                        </Button>
-                        
+                        </Button>}
                     </div>
                 </div>
                 <Offcanvas show={showChats} onHide={handleCloseChats}>
@@ -34,6 +52,9 @@ export default function Header() {
                         <MdChat className='fs-2 mt-auto mb-1 mx-3'/>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
+                    <div className='d-flex'>
+                        <Button className='mb-3 mx-auto' onClick={()=>{window.location.assign('/chat')}}>Nuevo chat</Button>
+                    </div>
                     <div className="mx-0 mb-3 border rounded-5 overflow-hidden d-flex">
                         <div className="w-100">
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
@@ -59,8 +80,11 @@ export default function Header() {
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>Mi cuenta</Offcanvas.Title>
                     </Offcanvas.Header>
-                    <Offcanvas.Body>
-                        lista de chats
+                    <Offcanvas.Body className='d-flex flex-column'>
+                        editar info
+                        <div className='text-center mt-auto'>
+                            <Button onClick={cerrarSesion}>Cerrar sesión</Button>
+                        </div>
                     </Offcanvas.Body>
                 </Offcanvas>
             </Container>

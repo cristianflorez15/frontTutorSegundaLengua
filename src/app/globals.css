@@ -2,20 +2,27 @@
   box-shadow: none !important;
 }
 
-@media (min-width: 200px){
+@media (min-height: 100px){
     .h-chat {
-        height: 70vh !important;
-    }
-    .h-chat-box {
-        height: 50vh !important;
+        height: 90vh !important;
     }
 
-    .h-history-box {
-        height: 80vh !important;
+    .h-header {
+        height: 10vh !important;
     }
 }
 
-@media (min-width: 768px){
+@media (min-height: 1500px){
+    .h-chat {
+        height: 92vh !important;
+    }
+
+    .h-header {
+        height: 6vh !important;
+    }
+}
+
+/* @media (min-width: 768px){
     .h-chat {
         height: 90vh !important;
     }
@@ -26,8 +33,14 @@
     .h-history-box {
         height: 70vh !important;
     }
-}
+} */
 
 .message-box {
     max-width: 75%;
+}
+
+.bg {
+    background-image: url('../../public/bg.jpg');
+    background-size: cover;
+    background-repeat: repeat;
 }
