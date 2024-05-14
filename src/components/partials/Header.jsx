@@ -5,6 +5,7 @@ import { MdChat } from "react-icons/md";
 import { SiSololearn } from "react-icons/si";
 import { Chats_data } from "@/context/context";
 import ChatBox from "@/components/chats/ChatBox";
+import EditarPerfil from './EditarPerfil';
 
 export default function Header() {
     const [showChats, setShowChats] = useState(false);
@@ -84,9 +85,9 @@ export default function Header() {
                         <Offcanvas.Title>Mi cuenta</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body className='d-flex flex-column'>
-                        editar info
+                        <EditarPerfil/>
                         <div className='text-center mt-auto'>
-                            <Button onClick={cerrarSesion}>Cerrar sesión</Button>
+                            <Button variant='danger' onClick={cerrarSesion}>Cerrar sesión</Button>
                         </div>
                     </Offcanvas.Body>
                 </Offcanvas>

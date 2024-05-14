@@ -27,7 +27,7 @@ export default function Chat(params) {
         }
         if(chats.length<=0){
             apiController.get('/chat/').then(rta => {
-                setChats(rta.data.reverse())
+                setChats(rta.data)
             })
         }
         scrollToBottom()
@@ -42,12 +42,45 @@ export default function Chat(params) {
             setChatActual({mensajes: [{parts:[{text: mensaje}], role: 'user'}]})
             await apiController.post({mensajes: [{parts:[{text: mensaje}], role: 'user'}]}, '/chat').then(rta => {
                 setChatActual(rta.data);
-                setChats(prev=>[rta.data, ...prev])
+                setChats(prev=>[...prev, rta.data])
             })
         }else{
             setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: mensaje}], role: 'user'}]}})
             await apiController.patch({mensajes: [...chatActual.mensajes, {parts:[{text: mensaje}], role: 'user'}], _id:chatActual._id}, '/chat').then(rta => {
                 setChatActual(rta.data);
+                setChats(prev => {
+                    prev.map(chat => {
+                        if(chat._id == rta.data._id){
+                            chat = rta.data;
+                        }
+                    })
+
+                    return prev
+                })
+            })
+        }
+    }
+
+    const random = async() => {
+        if(chatActual == null){
+            setChatActual({mensajes: [{parts:[{text: 'Choose a topic!'}], role: 'user'}]})
+            await apiController.post({mensajes: [{parts:[{text: 'Choose a topic!'}], role: 'user'}]}, '/chat').then(rta => {
+                setChatActual(rta.data);
+                setChats(prev=>[...prev, rta.data])
+            })
+        }else{
+            setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: 'Choose a topic!'}], role: 'user'}]}})
+            await apiController.patch({mensajes: [...chatActual.mensajes, {parts:[{text: 'Choose a topic!'}], role: 'user'}], _id:chatActual._id}, '/chat').then(rta => {
+                setChatActual(rta.data);
+                setChats(prev => {
+                    prev.map(chat => {
+                        if(chat._id == rta.data._id){
+                            chat = rta.data;
+                        }
+                    })
+
+                    return prev
+                })
             })
         }
     }
@@ -78,7 +111,7 @@ export default function Chat(params) {
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
                     </div>
-                    <div className="overflow-auto text-start h-chats">
+                    <div className="overflow-auto text-start h-chats d-flex flex-column-reverse">
                         {chats && chats?.map((chat,i)=>{
                             return( 
                                 <div key={i} onClick={()=>{elegirChat(chat)}}>
@@ -89,8 +122,8 @@ export default function Chat(params) {
                     </div>
                 </Col>
                 <Col xs={12} md={8} lg={8} className="bg-white justify-content-between d-flex flex-column h-chat">
-                    <div className="border-bottom">
-                        <h5 className="p-3 m-0">Título</h5>
+                    <div className="border-bottom text-center">
+                        <h5 className="p-3 m-0"><Button onClick={random}>Choose a topic!</Button></h5>
                     </div>
                     <div>
                         <div className="d-flex flex-column overflow-auto h-history" id="chat-box">

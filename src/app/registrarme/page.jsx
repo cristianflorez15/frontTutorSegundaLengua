@@ -3,12 +3,16 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import ApiController from '@/controllers/api.controller';
 import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 export default function Registrarme(params) {
 
     const apiController = new ApiController();
     const { register, handleSubmit, formState: { errors}, getValues} = useForm();
 
+    useEffect(()=>{
+        document.getElementById('fechaNacimiento').max = '2004-01-01';
+    },[])
     const enviarFormulario = async(data) => {
         delete data.confirmarContrasena
         await apiController.post(data, '/usuario').then(rta => {
@@ -58,8 +62,14 @@ export default function Registrarme(params) {
                     </Form.Label> */}
                     <Col sm={9} lg={6}>
                         <Form.Control type="email" placeholder="Correo" 
-                            {...register("correo", {required: true})}
+                            {...register("correo", {
+                                required: true,
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 
+                                }
+                            })}
                         />
+                        {(errors.correo) && <p className="text-danger m-0">Debes ingresar un correo válido</p>}
                     </Col>
                 </Form.Group>
 
@@ -69,8 +79,11 @@ export default function Registrarme(params) {
                     </Form.Label> */}
                     <Col sm={9} lg={6}>
                         <Form.Control type="password" placeholder="Contraseña" 
-                            {...register("contrasena", {required: true})}
+                            {...register("contrasena", {required: true,
+                                minLength: {
+                                value: 6}})}
                         />
+                        {(errors.contrasena) && <p className="text-danger m-0">La contraseña debe tener 6 caracteres como mínimo</p>}
                     </Col>
                 </Form.Group>
 
