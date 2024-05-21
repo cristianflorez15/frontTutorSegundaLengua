@@ -16,17 +16,25 @@ export default function Registrarme(params) {
     const enviarFormulario = async(data) => {
         delete data.confirmarContrasena
         await apiController.post(data, '/usuario').then(rta => {
-            Swal.fire({
-                title: rta.message,
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#0d6efd'
-            }).then(rta2 => {
-                if(rta2.isConfirmed == true && rta.status == 200){
-                    window.location.assign('/login')
-                }
-            })
-
+            if(rta.status == 200){
+                Swal.fire({
+                    title: rta.message,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#0d6efd'
+                }).then(rta2 => {
+                    if(rta2.isConfirmed == true && rta.status == 200){
+                        window.location.assign('/login')
+                    }
+                })
+            }else if(rta.status == 205){
+                Swal.fire({
+                    title: rta.message,
+                    icon: 'warning',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#0d6efd'
+                })
+            }
         })
     }
 
