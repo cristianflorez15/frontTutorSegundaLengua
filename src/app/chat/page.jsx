@@ -58,7 +58,8 @@ export default function Chat(params) {
                     setChats(prev=>[...prev, rta.data]);
                 })
             }else{
-                setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: mensaje}], role: 'user'}]}})
+                setChatActual(prevChat => {return {...prevChat, mensajes: [...prevChat.mensajes, {parts:[{text: mensaje}], role: 'user'}]}});
+                scrollToBottom();
                 await apiController.patch({mensajes: [...chatActual.mensajes, {parts:[{text: mensaje}], role: 'user'}], _id:chatActual._id}, '/chat').then(rta => {
                     setChatActual(rta.data);
                     setChats(prev => {
