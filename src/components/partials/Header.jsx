@@ -36,7 +36,7 @@ export default function Header() {
 
     return (
         <div className='h-header bg-dark'>
-            <Navbar bg="dark" data-bs-theme="dark" expand='md' className="mb-0 d-flex d-block border-bottom h-header ">
+            <Navbar data-bs-theme="dark" expand='md' className="mb-0 d-flex d-block border-bottom h-header">
             <Container fluid>
                 <Navbar.Brand href="/" className='mx-0'><SiSololearn className='mx-2'/>Tuto</Navbar.Brand>
                 <div className='d-flex flex-nowrap'>
@@ -54,8 +54,8 @@ export default function Header() {
                         </Button>}
                     </div>
                 </div>
-                <Offcanvas show={showChats} onHide={handleCloseChats}>
-                    <Offcanvas.Header closeButton>
+                <Offcanvas className='bg-dark' show={showChats} onHide={handleCloseChats}>
+                    <Offcanvas.Header className='text-white' closeButton>
                         <Offcanvas.Title>Mis chats</Offcanvas.Title>
                         <MdChat className='fs-2 mt-auto mb-1 mx-3'/>
                     </Offcanvas.Header>
@@ -68,8 +68,8 @@ export default function Header() {
                             <Form.Control placeholder="Buscar" className="lh-1 border-0 my-auto form-control-chat"/>
                         </div>
                     </div>
-                    <div className="overflow-auto text-start h-chats">
-                        {chats && chats?.map((chat,i)=>{
+                    <div className="overflow-auto text-start h-chats d-flex flex-column">
+                        {chats && chats?.sort((a,b)=>new Date(b.updatedAt) - new Date(a.updatedAt)).map((chat,i)=>{
                             return( 
                                 <div key={i} onClick={()=>{setChatActual(chat)}}>
                                     <ChatBox chat={chat}/>
