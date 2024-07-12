@@ -4,7 +4,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 export default function Home() {
   return( 
     <div className='d-flex flex-column justify-coontent-between'>
-      <Row xs={1} className='d-flex justify-content-end'>
+      <Row xs={1} className='d-flex justify-content-end g-0'>
         <Col xs={11} md={9} xl={7} className='w-md-50 my-4 d-flex flex-column text-end me-3 text-white'>
           <h1 class="display-2 fw-semibold mb-4">¡Bienvenido a Tuto!</h1>
           <p className='fs-5 bg-secondary bg-opacity-50 pe-4 py-3'>

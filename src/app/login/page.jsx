@@ -35,7 +35,7 @@ export default function Login(params) {
                     Correo
                     </Form.Label> */}
                     <Col sm={9} lg={6}>
-                        <Form.Control type="email" placeholder="Correo" 
+                        <Form.Control type="email" placeholder="Correo" defaultValue={'correo@correo.com'}
                             {...register("correo", {required: true})}
                         />
                     </Col>
@@ -46,7 +46,7 @@ export default function Login(params) {
                     Contraseña
                     </Form.Label> */}
                     <Col sm={9} lg={6}>
-                        <Form.Control type="password" placeholder="Contraseña" 
+                        <Form.Control type="password" placeholder="Contraseña" defaultValue={'123456'}
                             {...register("contrasena", {required: true})}
                         />
                     </Col>
